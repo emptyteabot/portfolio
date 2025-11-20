@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chen Yinghua | Portfolio</title>
+    <style>
+        /* --- 0. Apple White Design System --- */
+        :root {
+            --bg-page: #f5f5f7;      /* 浅灰底色 */
+            --bg-card: #ffffff;      /* 纯白卡片 */
+            --text-main: #1d1d1f;    /* 苹果黑 */
+            --text-sub: #86868b;     /* 苹果灰 */
+            --accent: #0071e3;       /* Apple Blue */
+            --shadow: 0 4px 24px rgba(0,0,0,0.04);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            font-family: -apple-system, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            line-height: 1.4;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 100px;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* --- 1. Hero 区域 --- */
+        .hero {
+            padding: 100px 0 60px;
+            text-align: center;
+            animation: fadeUp 0.8s ease-out;
+        }
+
+        .status-pill {
+            display: inline-block;
+            background: rgba(0, 113, 227, 0.08);
+            color: var(--accent);
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            border: 1px solid rgba(0, 113, 227, 0.2);
+        }
+
+        h1 {
+            font-size: clamp(48px, 5vw, 72px);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+            color: #000;
+        }
+
+        .subtitle {
+            font-size: 22px;
+            color: var(--text-sub);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- 2. Bento Grid (概览层) --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-bottom: 80px; /* 与下一板块的间距 */
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .card-content {
+            padding: 32px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 图片处理 */
+        .img-container {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 关键：防止人脸被切掉 */
+            object-position: center top; 
+            transition: transform 0.6s ease;
+        }
+        .card:hover .img-container img { transform: scale(1.03); }
+        
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%);
+            z-index: 1;
+        }
+
+        /* 文本 */
+        .label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            color: var(--text-sub);
+        }
+        .card-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+        .card-desc {
+            font-size: 16px;
+            color: var(--text-sub);
+        }
+
+        /* Grid 布局定义 */
+        .card-profile { grid-column: span 8; }
+        .card-stat { grid-column: span 4; align-items: center; justify-content: center; text-align: center; background: linear-gradient(135deg, #fff 0%, #f2f2f7 100%); }
+        .card-life { grid-column: span 4; color: white; min-height: 360px; } /* 加高生活卡片 */
+        .card-life .label, .card-life .card-desc { color: rgba(255,255,255,0.9); }
+        .card-tech { grid-column: span 8; min-height: 360px; }
+
+        /* GitHub 条 */
+        .github-bar {
+            grid-column: span 12;
+            background: #161617;
+            color: white;
+            padding: 24px 32px;
+            border-radius: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .github-bar:hover { background: #000; transform: scale(1.01); }
+
+        /* --- 3. 详细经历板块 (Timeline) --- */
+        .section-header {
+            margin-bottom: 32px;
+            padding-left: 12px;
+            border-left: 4px solid var(--accent);
+        }
+        .section-title { font-size: 32px; font-weight: 700; }
+
+        .detail-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .detail-item {
+            background: #fff;
+            padding: 32px;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            display: flex;
+            gap: 24px;
+        }
+        
+        .detail-date {
+            min-width: 120px;
+            font-weight: 600;
+            color: var(--text-sub);
+            font-size: 14px;
+            padding-top: 4px;
+        }
+
+        .detail-content h3 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+        .detail-content h4 { font-size: 16px; color: var(--accent); font-weight: 600; margin-bottom: 12px; }
+        .detail-content p { font-size: 15px; color: #444; line-height: 1.6; margin-bottom: 8px; }
+        .tag-container { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+        .tag { background: #f5f5f7; padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; color: #555; }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .grid { display: flex; flex-direction: column; }
+            .detail-item { flex-direction: column; gap: 8px; }
+            .detail-date { margin-bottom: 8px; }
+            h1 { font-size: 40px; }
+        }
+
+        /* 技能胶囊 */
+        .skill-pill {
+            display: inline-block;
+            padding: 8px 16px;
+            border: 1px solid #e5e5e5;
+            border-radius: 100px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="hero">
+        <div class="status-pill">● Seeking Internships</div>
+        <h1>Chen Yinghua</h1>
+        <div class="subtitle">
+            Sophomore @ XMU Statistics.<br>
+            Aspiring Quant & AI Product Engineer.
+        </div>
+    </div>
+
+    <div class="grid">
+        
+        <div class="card card-profile">
+            <div class="card-content" style="flex-direction: row; align-items: center; gap: 24px;">
+                <img src="./image_0e8263.png" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 4px solid #f5f5f7;">
+                <div>
+                    <div class="label" style="color: var(--accent);">About</div>
+                    <div class="card-title">Data-Driven Creator.</div>
+                    <div class="card-desc">Based in Xiamen. Merging statistical rigor with viral content creation.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-stat">
+            <div class="card-content">
+                <div class="label">Total Reach</div>
+                <div style="font-size: 56px; font-weight: 800; color: #000; line-height:1;">100k+</div>
+                <div style="color: var(--text-sub); margin-top: 8px; font-size: 14px;">Douyin & XHS</div>
+            </div>
+        </div>
+
+        <div class="card card-life">
+            <div class="img-container">
+                <img src="./image_2c929e.png" alt="Seaside">
+            </div>
+            <div class="overlay"></div>
+            <div class="card-content" style="justify-content: flex-end;">
+                <div class="label">Lifestyle</div>
+                <div class="card-title">Re. on Social</div>
+                <div class="card-desc">
+                    Sharing "Vibe Coding" workflows, campus life at XMU, and seaside moments.
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-tech">
+            <div class="card-content">
+                <div>
+                    <div class="label">Engineering</div>
+                    <div class="card-title">AI & Data Science.</div>
+                    <div class="card-desc" style="margin-bottom: 24px; max-width: 80%;">
+                        Building agents with LLMs and analyzing financial data.
+                    </div>
+                </div>
+                <div>
+                    <span class="skill-pill">Python</span>
+                    <span class="skill-pill">Pandas</span>
+                    <span class="skill-pill">PyTorch</span>
+                    <span class="skill-pill" style="background: #e3f2fd; color: #0071e3; border:none;">ChatGPT</span>
+                    <span class="skill-pill" style="background: #fce4ec; color: #c2185b; border:none;">Gemini</span>
+                    <span class="skill-pill">Web3</span>
+                </div>
+            </div>
+        </div>
+
+        <a href="https://github.com/emptyteabot" target="_blank" class="github-bar">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                <span style="font-weight: 600; font-size: 18px;">@emptyteabot</span>
+            </div>
+            <span style="font-size: 14px; opacity: 0.7;">View Projects ↗</span>
+        </a>
+
+    </div>
+
+    <div class="section-header">
+        <div class="section-title">Experience & Projects</div>
+    </div>
+
+    <div class="detail-list">
+        
+        <div class="detail-item">
+            <div class="detail-date">2025.09 — Present</div>
+            <div class="detail-content">
+                <h3>Quant Intern</h3>
+                <h4>Shanghai Xinbao Info Tech</h4>
+                <p>Tracking credit market events and policy changes. Maintaining quantitative codebases and databases.</p>
+                <div class="tag-container">
+                    <span class="tag">Python</span>
+                    <span class="tag">Market Monitoring</span>
+                    <span class="tag">Strategy Support</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="detail-date">2025.07 — 2025.09</div>
+            <div class="detail-content">
+                <h3>HFT Research Intern</h3>
+                <h4>Xiamen Zhihuan Century Investment</h4>
+                <p>Conducted deep-dive research on HFT strategies from top funds like Two Sigma. Built automated data pipelines for commodity futures.</p>
+                <div class="tag-container">
+                    <span class="tag">Data Pipelines</span>
+                    <span class="tag">Alpha Research</span>
+                    <span class="tag">Visualization</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="detail-date">Project</div>
+            <div class="detail-content">
+                <h3>Content Creator (Douyin/XHS)</h3>
+                <h4>Personal Brand</h4>
+                <p>Operate a tech & lifestyle account with 100k+ reach. Viral content includes "AI for Students" and "Vibe Coding".</p>
+                <div class="tag-container">
+                    <span class="tag">Viral Marketing</span>
+                    <span class="tag">Video Editing</span>
+                    <span class="tag">GenAI Tools</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="text-align: center; margin-top: 80px; color: #999; font-size: 13px;">
+        © 2025 Chen Yinghua. Built with Code.
+    </div>
+
+</div>
+
+</body>
+</html>
