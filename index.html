@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chen Yinghua | Re.</title>
     <style>
-        /* --- 0. Apple Design System (Pure Sans) --- */
+        /* --- 0. Apple Design System --- */
         :root {
             --bg-page: #ffffff;
             --text-main: #1d1d1f;
             --text-sub: #86868b;
             --accent: #0071e3;
-            /* 核心修正：只用苹果原生字体，拒绝丑陋的代码字体 */
             --font-stack: -apple-system, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
 
@@ -22,7 +21,7 @@
             color: var(--text-main);
             font-family: var(--font-stack);
             line-height: 1.4;
-            -webkit-font-smoothing: antialiased; /* 字体平滑，高级感的来源 */
+            -webkit-font-smoothing: antialiased;
             padding-bottom: 120px;
             overflow-x: hidden;
         }
@@ -33,24 +32,24 @@
             padding: 0 24px;
         }
 
-        /* --- 1. Hero Section (视觉冲击) --- */
+        /* --- 1. Hero Section --- */
         .hero {
             min-height: 90vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center; /* 居中更像发布会 */
+            align-items: center;
             text-align: center;
         }
 
-        /* 修正：巨大的状态文字 */
+        /* 状态标签 */
         .status-huge {
-            font-size: clamp(16px, 2vw, 20px);
+            font-size: clamp(14px, 2vw, 16px);
             font-weight: 700;
             color: var(--accent);
-            letter-spacing: 0.1em;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
             display: inline-block;
             padding: 12px 32px;
             background: rgba(0, 113, 227, 0.06);
@@ -60,24 +59,25 @@
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
         h1 {
-            font-size: clamp(64px, 8vw, 110px);
-            font-weight: 700; /* 稍微降低粗度，更优雅 */
-            letter-spacing: -0.025em;
-            line-height: 1.05;
+            font-size: clamp(56px, 8vw, 100px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
             margin-bottom: 24px;
             color: #000;
             max-width: 900px;
+            min-height: 1.1em; /* 防止抖动 */
         }
 
         .subtitle {
-            font-size: clamp(24px, 3vw, 32px);
+            font-size: clamp(20px, 3vw, 28px);
             font-weight: 400;
             color: var(--text-sub);
             max-width: 700px;
             min-height: 1.5em;
         }
 
-        /* 光标：细一点，更优雅 */
+        /* 光标 */
         .typing-cursor::after {
             content: '|';
             color: #000;
@@ -91,11 +91,11 @@
         #content-layer {
             opacity: 0;
             transform: translateY(60px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); /* 苹果式缓动曲线 */
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
         #content-layer.visible { opacity: 1; transform: translateY(0); }
 
-        /* --- 3. Bento Grid (细节打磨) --- */
+        /* --- 3. Bento Grid --- */
         .grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
@@ -104,7 +104,7 @@
         }
 
         .card {
-            background: #f5f5f7; /* 浅灰卡片，对比纯白背景 */
+            background: #f5f5f7;
             border-radius: 32px;
             overflow: hidden;
             position: relative;
@@ -129,7 +129,7 @@
         .img-bg img { 
             width: 100%; height: 100%; object-fit: cover; 
             transition: transform 0.6s; 
-            object-position: center 20%; 
+            object-position: center 30%; /* 调整重心，防止切头 */
         }
         .card:hover .img-bg img { transform: scale(1.05); }
         .overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent 60%); z-index: 1; }
@@ -166,63 +166,26 @@
         .card-life .label { color: rgba(255,255,255,0.8); }
         .card-life .card-desc { color: rgba(255,255,255,0.9); }
 
-        /* GitHub Bar - 极简黑 */
+        /* GitHub Bar */
         .github-bar {
             background: #000; color: #fff; padding: 32px 40px; border-radius: 32px;
             display: flex; justify-content: space-between; align-items: center; text-decoration: none;
         }
         .github-bar:hover { background: #1d1d1f; }
 
-        /* --- 4. Experience Timeline (字体修复版) --- */
-        .section-header {
-            margin-bottom: 60px;
-            text-align: left;
-        }
+        /* --- 4. Experience Timeline --- */
+        .section-header { margin-bottom: 60px; text-align: left; }
         .section-title { font-size: 48px; font-weight: 700; letter-spacing: -0.02em; }
 
-        .timeline {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
-
-        .timeline-item {
-            display: grid;
-            grid-template-columns: 240px 1fr;
-            gap: 40px;
-            padding-bottom: 40px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        /* 日期：不再用丑陋的代码字体，改用加粗的 Apple 字体 */
-        .time-meta {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-sub);
-            padding-top: 6px;
-        }
-
+        .timeline { display: flex; flex-direction: column; gap: 40px; }
+        .timeline-item { display: grid; grid-template-columns: 240px 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid #f0f0f0; }
+        .time-meta { font-size: 16px; font-weight: 600; color: var(--text-sub); padding-top: 6px; }
         .role-title { font-size: 24px; font-weight: 700; color: #000; margin-bottom: 4px; }
         .company-name { font-size: 18px; color: var(--accent); font-weight: 600; margin-bottom: 16px; display: block; }
-        
-        .desc-text {
-            font-size: 17px;
-            color: #424245;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            max-width: 800px;
-        }
+        .desc-text { font-size: 17px; color: #424245; line-height: 1.6; margin-bottom: 20px; max-width: 800px; }
 
-        /* 标签：极简胶囊 */
         .tech-tags { display: flex; gap: 10px; flex-wrap: wrap; }
-        .tech-tag {
-            font-size: 14px;
-            font-weight: 500;
-            color: #1d1d1f;
-            background: #f5f5f7;
-            padding: 8px 16px;
-            border-radius: 100px; /* 圆润 */
-        }
+        .tech-tag { font-size: 14px; font-weight: 500; color: #1d1d1f; background: #f5f5f7; padding: 8px 16px; border-radius: 100px; }
 
         @media (max-width: 768px) {
             .grid { display: flex; flex-direction: column; }
@@ -296,7 +259,7 @@
 
             <a href="https://github.com/emptyteabot" target="_blank" class="card span-12 github-bar">
                 <div style="display: flex; align-items: center; gap: 20px;">
-                    <svg height="32" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true" fill="white"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+                    <svg height="32" viewBox="0 0 16 16" width="32" fill="white"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
                     <span style="font-size: 20px; font-weight: 600;">@emptyteabot</span>
                 </div>
                 <span style="font-size: 16px; opacity: 0.8;">View Projects ↗</span>
@@ -308,7 +271,6 @@
         </div>
 
         <div class="timeline">
-            
             <div class="timeline-item">
                 <span class="time-meta">2025.09 — Present</span>
                 <div>
@@ -322,7 +284,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="timeline-item">
                 <span class="time-meta">2025.07 — 2025.09</span>
                 <div>
@@ -336,7 +297,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="timeline-item">
                 <span class="time-meta">Ongoing</span>
                 <div>
@@ -350,7 +310,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
         <div style="margin-top: 120px; color: #86868b; text-align: center; font-size: 13px;">
@@ -361,7 +320,7 @@
 </div>
 
 <script>
-    // --- OpenAI Style Typewriter ---
+    // --- 极速启动逻辑 ---
     const h1Text = "Chen Yinghua";
     const subText = "Sophomore @ XMU. Aspiring Quant & AI Product Engineer.";
     
@@ -369,27 +328,31 @@
     const subEl = document.getElementById('type-sub');
     const contentLayer = document.getElementById('content-layer');
 
-    async function typeWriter(element, text, speed = 50) {
+    async function typeWriter(element, text, speed = 40) {
         element.innerHTML = '';
         for (let i = 0; i < text.length; i++) {
             element.innerHTML += text.charAt(i);
+            // 稍微加快速度，避免等待感
             await new Promise(r => setTimeout(r, speed));
         }
     }
 
-    async function init() {
-        await typeWriter(h1El, h1Text, 80); // 名字慢点
+    // 关键：使用 DOMContentLoaded 而不是 window.onload
+    // 这样不用等图片加载完就开始打字，解决“卡顿”问题
+    document.addEventListener('DOMContentLoaded', async () => {
+        
+        // 1. Type Name
+        await typeWriter(h1El, h1Text, 60);
         h1El.classList.remove('typing-cursor');
         
+        // 2. Type Subtitle
         subEl.classList.add('typing-cursor');
-        await typeWriter(subEl, subText, 30); // 副标题快点
+        await typeWriter(subEl, subText, 20);
         
-        // 动画结束后，内容优雅上浮
-        await new Promise(r => setTimeout(r, 300));
+        // 3. Show Content Immediately
         contentLayer.classList.add('visible');
-    }
+    });
 
-    window.onload = init;
 </script>
 
 </body>
